@@ -22,7 +22,7 @@ public class MemoRepository {
 
     public Memo addMemo(MemoRequestDto memoRequestDto){
         long id = memoMap.size() + 1;
-        Memo memo = new Memo(id,memoRequestDto.getMessage(),memoRequestDto.getTag(),FALSE, LocalDate.now(), LocalDate.now());  // To ask (up)
+        Memo memo = new Memo(id,memoRequestDto.getMessage(),memoRequestDto.getTag(),memoRequestDto.getComplete(), LocalDate.now(), LocalDate.now());  // To ask (up)
         memoMap.put(id,memo);
         return memo;
     }
@@ -37,5 +37,14 @@ public class MemoRepository {
 
     public void deleteMemosById(Long id){
         memoMap.remove(id);
+    }
+
+    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto){
+        Memo memoToUpdate = memoMap.get(id);
+        memoToUpdate.setComplete(memoRequestDto.getComplete());
+        memoToUpdate.setLocalDate_modified(LocalDate.now());
+        memoToUpdate.setMessage(memoRequestDto.getMessage());
+        memoToUpdate.setTag(memoRequestDto.getTag());
+        return memoToUpdate;
     }
 }

@@ -4,6 +4,7 @@ import com.luna.TodoList.dto.MemoRequestDto;
 import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.service.MemoService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,4 +40,9 @@ public class MemoController {
         memoService.deleteMemosById(id);
     }
     // Todo: delete by tag or complete
+
+    @PutMapping("/{id}")
+    public Memo updateMemo(@PathVariable Long id, @RequestBody @Valid MemoRequestDto memoRequestDto){
+        return memoService.updateMemo(id,memoRequestDto);
+    }
 }
