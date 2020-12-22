@@ -26,4 +26,8 @@ public class MemoService {
     public List<Memo> getAllMemos(){
         return memoRepository.getAllMemos();
     }
+
+    public void deleteMemosById(Long id){
+        memoRepository.deleteMemosById(id);
+    }
 }

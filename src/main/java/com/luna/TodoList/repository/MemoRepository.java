@@ -20,18 +20,22 @@ public class MemoRepository {
         this.memoMap = memoMap;
     }
 
-    public Memo getMemoById(Long id){
-        return memoMap.get(id);
-    }
-
     public Memo addMemo(MemoRequestDto memoRequestDto){
         long id = memoMap.size() + 1;
-        Memo memo = new Memo(id,memoRequestDto.getMessage(),memoRequestDto.getTag(),FALSE, LocalDate.now());  // To ask (up)
+        Memo memo = new Memo(id,memoRequestDto.getMessage(),memoRequestDto.getTag(),FALSE, LocalDate.now(), LocalDate.now());  // To ask (up)
         memoMap.put(id,memo);
         return memo;
     }
 
+    public Memo getMemoById(Long id){
+        return memoMap.get(id);
+    }
+
     public List<Memo> getAllMemos(){
         return new ArrayList<>(memoMap.values());
+    }
+
+    public void deleteMemosById(Long id){
+        memoMap.remove(id);
     }
 }

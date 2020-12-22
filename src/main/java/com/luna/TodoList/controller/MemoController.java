@@ -33,4 +33,10 @@ public class MemoController {
     public List<Memo> getAllMemos(){
         return memoService.getAllMemos();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteMemosById(@PathVariable Long id){
+        memoService.deleteMemosById(id);
+    }
+    // Todo: delete by tag or complete
 }
