@@ -10,36 +10,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Boolean.FALSE;
-
 @Repository
 public class MemoRepository {
     private Map<Long, Memo> memoMap = new HashMap<>();
+    public static Long indexOfMemo = (long) 0;
 
     public MemoRepository() {
         this.memoMap = memoMap;
     }
 
-    public Memo addMemo(MemoRequestDto memoRequestDto){
-        long id = memoMap.size() + 1;
-        Memo memo = new Memo(id,memoRequestDto.getMessage(),memoRequestDto.getTag(),memoRequestDto.getComplete(), LocalDate.now(), LocalDate.now());  // To ask (up)
-        memoMap.put(id,memo);
+    public Memo addMemo(MemoRequestDto memoRequestDto) {
+        indexOfMemo += 1;
+        Memo memo = new Memo(indexOfMemo, memoRequestDto.getMessage(), memoRequestDto.getTag(), memoRequestDto.getComplete(), LocalDate.now(), LocalDate.now());  // To ask (up)
+        memoMap.put(indexOfMemo, memo);
         return memo;
     }
 
-    public Memo getMemoById(Long id){
+    public Memo getMemoById(Long id) {
         return memoMap.get(id);
     }
 
-    public List<Memo> getAllMemos(){
+    public List<Memo> getAllMemos() {
         return new ArrayList<>(memoMap.values());
     }
 
-    public void deleteMemosById(Long id){
+    public void deleteMemosById(Long id) {
         memoMap.remove(id);
     }
 
-    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto){
+    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) {
         Memo memoToUpdate = memoMap.get(id);
         memoToUpdate.setComplete(memoRequestDto.getComplete());
         memoToUpdate.setLocalDate_modified(LocalDate.now());
