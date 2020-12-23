@@ -5,7 +5,9 @@ import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemoService {
@@ -15,23 +17,29 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Memo addMemo(MemoRequestDto memoRequestDto){
-        return memoRepository.addMemo(memoRequestDto);
+    public Memo addMemo(Memo memo){
+        memoRepository.save(memo);
+        return memo;
     }
 
-    public Memo getMemoById(Long id){
-        return memoRepository.getMemoById(id);
+    public Optional<Memo> getMemoById(Long id){
+        return memoRepository.findById(id);
     }
 
     public List<Memo> getAllMemos(){
-        return memoRepository.getAllMemos();
+        return memoRepository.findAll();
     }
 
     public void deleteMemosById(Long id){
-        memoRepository.deleteMemosById(id);
+        memoRepository.deleteById(id);
     }
 
     public Memo updateMemo(Long id, MemoRequestDto memoRequestDto){
-        return memoRepository.updateMemo(id,memoRequestDto);
+        Memo memoToUpdate = memoRepository.findById(id).orElse(null);
+        memoToUpdate.setMessage(memoRequestDto.getMessage());
+        memoToUpdate.setTag(memoRequestDto.getMessage());
+        memoToUpdate.setComplete(memoRequestDto.getComplete());
+        memoToUpdate.setLocalDate_modified(LocalDate.now());
+        return memoToUpdate;
     }
 }
