@@ -29,7 +29,8 @@ public class MemoController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Memo> getMemoById(@PathVariable Long id){
+    public Memo getMemoById(@PathVariable Long id){
+        System.out.println("Get controller");
         return memoService.getMemoById(id);
     }
 

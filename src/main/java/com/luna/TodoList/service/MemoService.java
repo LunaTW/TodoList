@@ -1,13 +1,13 @@
 package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.MemoRequestDto;
+import com.luna.TodoList.exception.MemoNotFoundException;
 import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MemoService {
@@ -17,25 +17,28 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Memo addMemo(Memo memo){
+    public Memo addMemo(Memo memo) throws MemoNotFoundException {
         memoRepository.save(memo);
         return memo;
     }
 
-    public Optional<Memo> getMemoById(Long id){
-        return memoRepository.findById(id);
+    public Memo getMemoById(Long id) throws MemoNotFoundException {
+        Memo memo = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+        System.out.println("get service");
+        return memo;
     }
 
-    public List<Memo> getAllMemos(){
+    public List<Memo> getAllMemos() {
         return memoRepository.findAll();
     }
 
-    public void deleteMemosById(Long id){
+    public void deleteMemosById(Long id) throws MemoNotFoundException {
+        memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
         memoRepository.deleteById(id);
     }
 
-    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto){
-        Memo memoToUpdate = memoRepository.findById(id).orElse(null);
+    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) throws MemoNotFoundException {
+        Memo memoToUpdate = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
         memoToUpdate.setMessage(memoRequestDto.getMessage());
         memoToUpdate.setTag(memoRequestDto.getMessage());
         memoToUpdate.setComplete(memoRequestDto.getComplete());
