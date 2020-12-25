@@ -6,6 +6,7 @@ Terminal:
  2. `mysql -uroot -p`
  3. `create todolist`
  4. `use todolist`
+ 5. `java -jar target/TodoList-0.0.1-SNAPSHOT.jar`
  
  Postman:
  
