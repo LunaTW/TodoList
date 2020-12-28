@@ -32,4 +32,5 @@ public class Memo {
     private LocalDate localDate_created=LocalDate.now();
 
     private LocalDate localDate_modified=LocalDate.now();
+
 }
