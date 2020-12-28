@@ -1,9 +1,10 @@
 package com.luna.TodoList.dto;
 
-import com.sun.istack.internal.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 import static java.lang.Boolean.FALSE;
 
