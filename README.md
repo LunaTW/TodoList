@@ -2,11 +2,8 @@
 
 Terminal:
 
- 1. `docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password -d mysql`
- 2. `mysql -uroot -p`
- 3. `create todolist`
- 4. `use todolist`
- 5. `java -jar target/TodoList-0.0.1-SNAPSHOT.jar`
+ 1. `docker build -t todolist .` (rebuild)
+ 2. `docker-compose up`
  
  Postman:
  
