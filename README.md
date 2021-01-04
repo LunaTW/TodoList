@@ -2,9 +2,8 @@
 
 Terminal:
 
- 1. `docker-compose --build`
+ 1. `docker build -t todolist .` (rebuild)
  2. `docker-compose up`
-
  
  Postman:
  
