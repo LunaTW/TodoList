@@ -37,6 +37,14 @@ public class MemoService {
         return allMemosByTag;
     }
 
+    public List<Memo> getMemosByCompleted(Boolean completed){
+        List<Memo> allMemosByTag = memoRepository.findAll()
+                .stream()
+                .filter(memo -> memo.getComplete().equals(completed))
+                .collect(Collectors.toList());
+        return allMemosByTag;
+    }
+
     public List<Memo> getAllMemos() {
         return memoRepository.findAll();
     }

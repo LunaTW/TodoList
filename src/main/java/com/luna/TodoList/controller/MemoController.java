@@ -42,6 +42,12 @@ public class MemoController {
         return memoService.getMemosByTag(tag);
     }
 
+    @GetMapping("complete")
+    public List<Memo> getMemosByCompleted(@RequestParam Boolean completed){
+        return memoService.getMemosByCompleted(completed);
+    }
+
+
     @DeleteMapping("/{id}")
     public void deleteMemosById(@PathVariable Long id){
         memoService.deleteMemosById(id);

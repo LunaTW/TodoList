@@ -24,7 +24,7 @@ public class TodoListApplication {
 	public CommandLineRunner demo(MemoRepository memoRepository) {
 		return (args) -> {
 			// save a few memoRepository
-			memoRepository.save(new Memo(1L,"this is the 1st message","xian",false,LocalDate.now(),LocalDate.now()));
+			memoRepository.save(new Memo(1L,"this is the 1st message","xian",true,LocalDate.now(),LocalDate.now()));
 			memoRepository.save(new Memo((long)2,"this is the second message","xian",false,LocalDate.now(),LocalDate.now()));
 			memoRepository.save(new Memo((long)3,"this is the ~3~ message","chun",false,LocalDate.now(),LocalDate.now()));
 
