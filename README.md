@@ -2,8 +2,12 @@
 
 Terminal:
 
- 1. `docker build -t todolist .` (rebuild)
- 2. `docker-compose up`
+ 1. `mvn clean install`
+ 2. `docker-compose build`  (rebuild)
+ 3. `docker-compose up`
+ 
+Try ?  
+`docker build -t todolist .` ???
  
  Postman:
  

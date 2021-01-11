@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/memos")
@@ -30,7 +29,6 @@ public class MemoController {
 
     @GetMapping("/{id}")
     public Memo getMemoById(@PathVariable Long id){
-        System.out.println("Get controller");
         return memoService.getMemoById(id);
     }
 
@@ -39,11 +37,15 @@ public class MemoController {
         return memoService.getAllMemos();
     }
 
+    @GetMapping("tags/{tag}")
+    public List<Memo> getMemosByTag(@PathVariable String tag){
+        return memoService.getMemosByTag(tag);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteMemosById(@PathVariable Long id){
         memoService.deleteMemosById(id);
     }
-    // Todo: delete by tag or complete
 
     @PutMapping("/{id}")
     public Memo updateMemo(@PathVariable Long id, @RequestBody @Valid MemoRequestDto memoRequestDto){

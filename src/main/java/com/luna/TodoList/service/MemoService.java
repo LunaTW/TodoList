@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemoService {
@@ -26,6 +27,14 @@ public class MemoService {
         Memo memo = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
         System.out.println("get service");
         return memo;
+    }
+
+    public List<Memo> getMemosByTag(String tag){
+        List<Memo> allMemosByTag = memoRepository.findAll()
+                .stream()
+                .filter(memo -> memo.getTag().equals(tag))
+                .collect(Collectors.toList());
+        return allMemosByTag;
     }
 
     public List<Memo> getAllMemos() {
