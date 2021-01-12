@@ -17,8 +17,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
     }
 
-    @ExceptionHandler(MemoNotFoundException.class)
-    public ResponseEntity<ErrorResult> handle(MemoNotFoundException exception){
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResult> handle(NotFoundException exception){
         String message = exception.getMessage();
         ErrorResult errorResult = new ErrorResult(HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND.getReasonPhrase(),message);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);

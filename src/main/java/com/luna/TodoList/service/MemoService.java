@@ -1,7 +1,7 @@
 package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.MemoRequestDto;
-import com.luna.TodoList.exception.MemoNotFoundException;
+import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.repository.MemoRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Memo addMemo(MemoRequestDto memoRequestDto) throws MemoNotFoundException {
+    public Memo addMemo(MemoRequestDto memoRequestDto) throws NotFoundException {
         Memo memo = Memo.builder().message(memoRequestDto.getMessage())
                 .tag(memoRequestDto.getTag())
                 .complete(memoRequestDto.getComplete())
@@ -29,8 +29,8 @@ public class MemoService {
         return memo;
     }
 
-    public Memo getMemoById(Long id) throws MemoNotFoundException {
-        Memo memo = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+    public Memo getMemoById(Long id) throws NotFoundException {
+        Memo memo = memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
         return memo;
     }
 
@@ -62,13 +62,13 @@ public class MemoService {
         return memoRepository.findAll();
     }
 
-    public void deleteMemosById(Long id) throws MemoNotFoundException {
-        memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+    public void deleteMemosById(Long id) throws NotFoundException {
+        memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
         memoRepository.deleteById(id);
     }
 
-    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) throws MemoNotFoundException {
-        memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) throws NotFoundException {
+        memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
         Memo memoToUpdate = memoRepository.getOne(id);
         memoToUpdate.setMessage(memoRequestDto.getMessage());
         memoToUpdate.setTag(memoRequestDto.getTag());
