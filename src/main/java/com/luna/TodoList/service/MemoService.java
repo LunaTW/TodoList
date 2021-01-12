@@ -25,7 +25,6 @@ public class MemoService {
 
     public Memo getMemoById(Long id) throws MemoNotFoundException {
         Memo memo = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
-        System.out.println("get service");
         return memo;
     }
 
@@ -55,11 +54,13 @@ public class MemoService {
     }
 
     public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) throws MemoNotFoundException {
-        Memo memoToUpdate = memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+        memoRepository.findById(id).orElseThrow(() -> new MemoNotFoundException("Memo not exist"));
+        Memo memoToUpdate = memoRepository.getOne(id);
         memoToUpdate.setMessage(memoRequestDto.getMessage());
-        memoToUpdate.setTag(memoRequestDto.getMessage());
+        memoToUpdate.setTag(memoRequestDto.getTag());
         memoToUpdate.setComplete(memoRequestDto.getComplete());
         memoToUpdate.setLocalDate_modified(LocalDate.now());
+        memoRepository.save(memoToUpdate);
         return memoToUpdate;
     }
 }
