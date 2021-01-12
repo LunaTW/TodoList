@@ -50,6 +50,14 @@ public class MemoService {
         return allMemosByTag;
     }
 
+    public List<Memo> getMemoByKeyword(String keyword){
+        List<Memo> allMemosByKeyword = memoRepository.findAll()
+                .stream()
+                .filter(memo -> memo.getMessage().indexOf(keyword) > -1)
+                .collect(Collectors.toList());
+        return allMemosByKeyword;
+    }
+
     public List<Memo> getAllMemos() {
         return memoRepository.findAll();
     }

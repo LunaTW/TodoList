@@ -39,6 +39,11 @@ public class MemoController {
         return memoService.getMemosByTag(tag);
     }
 
+    @GetMapping("keywords/{keyword}")
+    public List<Memo> getMemosByKeyword(@PathVariable String keyword){
+        return memoService.getMemoByKeyword(keyword);
+    }
+
     @GetMapping("complete")
     public List<Memo> getMemosByCompleted(@RequestParam Boolean completed){
         return memoService.getMemosByCompleted(completed);
