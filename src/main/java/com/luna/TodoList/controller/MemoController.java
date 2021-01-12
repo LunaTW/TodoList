@@ -21,10 +21,7 @@ public class MemoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Memo addMemo(@RequestBody @Valid MemoRequestDto memoRequestDto){
-        Memo memo = Memo.builder().message(memoRequestDto.getMessage())
-                                    .tag(memoRequestDto.getTag())
-                                    .build();
-        return memoService.addMemo(memo);
+        return memoService.addMemo(memoRequestDto);
     }
 
     @GetMapping("/{id}")

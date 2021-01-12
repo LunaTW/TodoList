@@ -18,7 +18,13 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Memo addMemo(Memo memo) throws MemoNotFoundException {
+    public Memo addMemo(MemoRequestDto memoRequestDto) throws MemoNotFoundException {
+        Memo memo = Memo.builder().message(memoRequestDto.getMessage())
+                .tag(memoRequestDto.getTag())
+                .complete(memoRequestDto.getComplete())
+                .localDate_created(LocalDate.now())
+                .localDate_modified(LocalDate.now())
+                .build();
         memoRepository.save(memo);
         return memo;
     }
