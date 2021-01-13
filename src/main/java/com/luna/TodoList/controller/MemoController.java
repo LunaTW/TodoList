@@ -14,6 +14,11 @@ import java.util.List;
 public class MemoController {
     private MemoService memoService;
 
+    // ToDo: Update GET. getMemoByUser
+
+    // -- For Admin Feature --
+    // Todo: getMemoByID(check message belong to this user,will get userId as well)
+
     public MemoController(MemoService memoService) {
         this.memoService = memoService;
     }
@@ -49,6 +54,10 @@ public class MemoController {
         return memoService.getMemosByCompleted(completed);
     }
 
+    @GetMapping("users/{userId}")
+    public List<Memo> getMemoByUserId(@PathVariable Long id){
+        return memoService.getMemoByUserId(id);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteMemosById(@PathVariable Long id){

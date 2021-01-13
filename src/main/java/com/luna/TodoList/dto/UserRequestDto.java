@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,7 +16,7 @@ public class UserRequestDto {
     @NotNull
     private String username;
 
-    private Date DateOfBirth;
+    private LocalDate DateOfBirth;
 
     private String email;
 

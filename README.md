@@ -45,11 +45,23 @@ memo:
 
 |  Field   | Type  |
 |  ----  | ----  |
-| id  | Long |
-| message  | String |
-| complete|Boolean|
-| tag | List |
-| data | LocalDate | 
+| MemoId  | Long |
+| tag | String |
+/complete| Boolean|
+|publicity|Boolean|
+|publish-time|LocalDate|
+|Modified-time | LocalDate |
+|UserID|Long|
+
+User:
+
+|  Field   | Type  |
+|  ----  | ----  |
+| UserID | Long |
+| DoB | Date |
+| email | String | 
+| phone | String | 
+
 
 12.21 -- 12.27:
 1. POST, DELETE, GET, POST 
@@ -58,3 +70,8 @@ memo:
 
 12.28 -- 1.3:
 1. 
+
+AC Question: 
+- Task can be share to other user
+to public or specific one?
+if yes: memo add model: belongs and publicity.

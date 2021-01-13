@@ -29,8 +29,12 @@ public class Memo {
 
     private Boolean complete=FALSE;
 
+    private Boolean publicity=FALSE;
+
     private LocalDate localDate_created=LocalDate.now();
 
     private LocalDate localDate_modified=LocalDate.now();
 
+    @NotNull(message ="~UserId cannot be none~")
+    private Long userId;
 }
