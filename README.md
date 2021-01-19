@@ -5,6 +5,7 @@ Terminal:
  1. `mvn clean install`
  2. `docker-compose build`  (rebuild)
  3. `docker-compose up`
+ 4. `docker-compose down`
  
 Try ?  
 `docker build -t todolist .` ???
@@ -63,15 +64,3 @@ User:
 | phone | String | 
 
 
-12.21 -- 12.27:
-1. POST, DELETE, GET, POST 
-2. mysql
-3. exception
-
-12.28 -- 1.3:
-1. 
-
-AC Question: 
-- Task can be share to other user
-to public or specific one?
-if yes: memo add model: belongs and publicity.
