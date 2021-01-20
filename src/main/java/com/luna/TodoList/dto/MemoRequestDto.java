@@ -14,6 +14,7 @@ import static java.lang.Boolean.FALSE;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MemoRequestDto {
 
     @NotNull(message = "~ Plan title cannot be none ~")

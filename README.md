@@ -10,8 +10,14 @@ Terminal:
 Try ?  
 `docker build -t todolist .` ???
  
- Postman:
- 
+ -> -> ->-> -> ->-> -> -> 这只是演习 -> ->-> -> ->-> -> ->-> -> ->
+ ##Functions:
+ |   😄  | POST  | DELETE | PUT | GET |
+ |  ----  | ----  | --- | --- | --- |
+ |   基于Memo  | 1. memo(userID) | 1. memo(memoID) | 1. memo(memoID) | 1. All memos <br> 2. All memos (public)[暂时未用] <br> 3. All memos (userID) <br> 4. memo (memoID) <br> 5. memo (tags) <br> 6. memo (keyword) <br> 7. memo (complete) <br>    |
+ |   基于User  | 1. user  | 1. user(userID) | 1. user(userID) | 1. All users <br> 2. user (userID)| 
+
+  ###Postman:
 - POST:
  
   `localhost:8080/memos`

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
-@RestController(value = "/users")
+@RestController
+@RequestMapping(value = "/users")
 public class UserController {
     private UserService userService;
 
