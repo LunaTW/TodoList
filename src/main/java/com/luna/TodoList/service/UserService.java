@@ -2,7 +2,6 @@ package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.UserRequestDto;
 import com.luna.TodoList.exception.NotFoundException;
-import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.model.User;
 import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User addUser(UserRequestDto userRequestDto){
+    public User addUser(UserRequestDto userRequestDto) {
         User user = User.builder()
                 .username(userRequestDto.getUsername())
                 .DateOfBirth(userRequestDto.getDateOfBirth())
@@ -29,9 +28,10 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(Long id){
+    public String deleteUserById(Long id) throws NotFoundException{
         userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not exist"));
         userRepository.deleteById(id);
+        return "SUCCESS";
     }
 
     public User updateUser(Long id, UserRequestDto userRequestDto){
@@ -49,8 +49,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public static User getUserById(Long id){
+    public User getUserById(Long id){
         return userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
     }
+
 
 }

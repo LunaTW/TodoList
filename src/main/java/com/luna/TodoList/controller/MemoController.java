@@ -14,8 +14,6 @@ import java.util.List;
 public class MemoController {
     private MemoService memoService;
 
-    // ToDo: Update GET. getMemoByUser
-
     // -- For Admin Feature --
     // Todo: getMemoByID(check message belong to this user,will get userId as well)
 
@@ -25,7 +23,7 @@ public class MemoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Memo addMemo(@RequestBody @Valid MemoRequestDto memoRequestDto){
+    public Memo addMemo(@RequestBody @Valid MemoRequestDto memoRequestDto) {
         return memoService.addMemo(memoRequestDto);
     }
 
@@ -39,24 +37,24 @@ public class MemoController {
         return memoService.getAllMemos();
     }
 
-    @GetMapping("tags/{tag}")
+    @GetMapping("/tags/{tag}")
     public List<Memo> getMemosByTag(@PathVariable String tag){
         return memoService.getMemosByTag(tag);
     }
 
-    @GetMapping("keywords/{keyword}")
+    @GetMapping("/keywords/{keyword}")
     public List<Memo> getMemosByKeyword(@PathVariable String keyword){
-        return memoService.getMemoByKeyword(keyword);
+        return memoService.getMemosByKeyword(keyword);
     }
 
-    @GetMapping("complete")
+    @GetMapping("/complete")
     public List<Memo> getMemosByCompleted(@RequestParam Boolean completed){
         return memoService.getMemosByCompleted(completed);
     }
 
-    @GetMapping("users/{userId}")
-    public List<Memo> getMemoByUserId(@PathVariable Long id){
-        return memoService.getMemoByUserId(id);
+    @GetMapping("/users/{userId}")
+    public List<Memo> getMemoByUserId(@PathVariable Long userId){
+        return memoService.getMemoByUserId(userId);
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +62,13 @@ public class MemoController {
         memoService.deleteMemosById(id);
     }
 
+    @DeleteMapping("/users/{userId}")
+    public void deleteMemosByUserId(@PathVariable Long userId){
+        memoService.deleteMemosByUserId(userId);
+    }
+
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Memo updateMemo(@PathVariable Long id, @RequestBody @Valid MemoRequestDto memoRequestDto){
         return memoService.updateMemo(id,memoRequestDto);
     }

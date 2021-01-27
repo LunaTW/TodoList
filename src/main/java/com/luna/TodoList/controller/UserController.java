@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -24,9 +25,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+        userService.deleteUserById(id);
     }
 
     @PutMapping("/{id}")
@@ -36,13 +37,11 @@ public class UserController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public User getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
