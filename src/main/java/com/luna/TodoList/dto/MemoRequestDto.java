@@ -2,12 +2,8 @@ package com.luna.TodoList.dto;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import java.time.LocalDate;
 
 import static java.lang.Boolean.FALSE;
 

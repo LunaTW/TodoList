@@ -4,6 +4,7 @@ import com.luna.TodoList.dto.MemoRequestDto;
 import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.repository.MemoRepository;
+import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,12 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class MemoService {
     private final MemoRepository memoRepository;
+    private final UserRepository userRepository;
 
-    public MemoService(MemoRepository memoRepository) {
+    public MemoService(MemoRepository memoRepository, UserRepository userRepository) {
         this.memoRepository = memoRepository;
+        this.userRepository = userRepository;
     }
 
-    public Memo addMemo(MemoRequestDto memoRequestDto) throws NotFoundException {
+    public Memo addMemo(MemoRequestDto memoRequestDto)  {
         Memo memo = Memo.builder().message(memoRequestDto.getMessage())
                 .tag(memoRequestDto.getTag())
                 .complete(memoRequestDto.getComplete())
@@ -51,7 +54,7 @@ public class MemoService {
         return allMemosByCompleted;
     }
 
-    public List<Memo> getMemoByKeyword(String keyword){
+    public List<Memo> getMemosByKeyword(String keyword){
         List<Memo> allMemosByKeyword = memoRepository.findAll()
                 .stream()
                 .filter(memo -> memo.getMessage().contains(keyword))
@@ -63,7 +66,7 @@ public class MemoService {
         return memoRepository.findAll();
     }
 
-    public List<Memo> getMemoByUserId(Long id){
+    public List<Memo> getMemoByUserId(Long id) {
         List<Memo> allMemosByUserId = memoRepository.findAll()
                 .stream()
                 .filter(memo -> memo.getUserId().equals(id))
@@ -71,9 +74,16 @@ public class MemoService {
         return allMemosByUserId;
     }
 
-    public void deleteMemosById(Long id) throws NotFoundException {
+    public String deleteMemosById(Long id) throws NotFoundException {
         memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
         memoRepository.deleteById(id);
+        return "SUCCESS";
+    }
+
+    public String deleteMemosByUserId(Long userId) throws NotFoundException {
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not exist"));
+        memoRepository.deleteByUserId(userId);
+        return "SUCCESS";
     }
 
     // cannot change user for now: for design
@@ -87,5 +97,18 @@ public class MemoService {
         memoToUpdate.setPublicity(memoRequestDto.getPublicity());
         memoRepository.save(memoToUpdate);
         return memoToUpdate;
+    }
+
+    public Memo shareMemo(Long userId, Memo memo) {
+        Memo newMemo = Memo.builder().message(memo.getMessage())
+                .tag(memo.getTag())
+                .complete(memo.getComplete())
+                .publicity(memo.getPublicity())
+                .localDate_created(LocalDate.now())
+                .localDate_modified(LocalDate.now())
+                .userId(userId)
+                .build();
+        memoRepository.save(newMemo);
+        return newMemo;
     }
 }
