@@ -18,11 +18,14 @@ public class UserRequestDto {
     @NotNull
     private String username;
 
+    @NotNull
+    private String password;
+
     private LocalDate DateOfBirth;
 
     private String email;
 
     private String phone;
 
-    private Boolean string;
+    private Boolean admin;
 }

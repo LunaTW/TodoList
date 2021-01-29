@@ -62,6 +62,7 @@ public class UserControllerTest {
 
             userRequestDto = UserRequestDto.builder()
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -70,6 +71,7 @@ public class UserControllerTest {
             user = User.builder()
                     .userId(userId)
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -169,6 +171,7 @@ public class UserControllerTest {
 
             userRequestDto = UserRequestDto.builder()
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -177,6 +180,7 @@ public class UserControllerTest {
             user = User.builder()
                     .userId(userId)
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -264,6 +268,7 @@ public class UserControllerTest {
 
             userRequestDto = UserRequestDto.builder()
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -271,6 +276,7 @@ public class UserControllerTest {
 
             userRequestDtoToUpdate = UserRequestDto.builder()
                     .username("NotLuna")
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -279,6 +285,7 @@ public class UserControllerTest {
             user = User.builder()
                     .userId(userId)
                     .username(username)
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
@@ -287,6 +294,7 @@ public class UserControllerTest {
             userToUpdate = User.builder()
                     .userId(userId)
                     .username("NotLuna")
+                    .password("hahaha")
                     .DateOfBirth(DateOfBirth)
                     .email(email)
                     .phone(phone)
