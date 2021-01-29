@@ -68,5 +68,10 @@ User:
 | DoB | Date |
 | email | String | 
 | phone | String | 
+| Admin | Boolean |
 
-
+~~~
+admin 原则:
+1. 个人可对自己memo，user info 增删改查. 
+2. 个人无法查看他人的私人memo, 可查看他人的public memo和个人信息.
+3. admin可以get all info，delete all info, 但无法更改他人信息.

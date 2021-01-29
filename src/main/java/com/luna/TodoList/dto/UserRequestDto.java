@@ -23,4 +23,6 @@ public class UserRequestDto {
     private String email;
 
     private String phone;
+
+    private Boolean string;
 }
