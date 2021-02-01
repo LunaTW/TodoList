@@ -23,7 +23,7 @@ public class UserService {
         Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
 
         if (id.equals(userLogin) || userRequestDto.getAdmin()) {
-            userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not exist"));
+            userRepository.findById(id);
             userRepository.deleteById(id);
             return "SUCCESS";
         } else {
@@ -36,8 +36,8 @@ public class UserService {
         Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
 
         if (id.equals(userLogin) || userRequestDto.getAdmin()) {
-            userRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not exist!"));
-            User userToUpdate = userRepository.getOne(id);
+            userRepository.findById(id);
+            User userToUpdate = userRepository.findById(id);
             userToUpdate.setUsername(userRequestDto.getUsername());
             userToUpdate.setDateOfBirth(userRequestDto.getDateOfBirth());
             userToUpdate.setEmail(userRequestDto.getEmail());
@@ -63,7 +63,7 @@ public class UserService {
         Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
 
         if (id.equals(userLogin) || userRequestDto.getAdmin()) {
-            return userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
+            return userRepository.findById(id);
         } else {
             throw new Exception("You do not have access");
         }
