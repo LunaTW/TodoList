@@ -25,7 +25,6 @@ public class AuthController {
         return authService.register(authRequestDto);
     }
 
-
     @GetMapping(value = "/login")
     public User login(@RequestBody @Valid AuthRequestDto authRequestDto)  {
         return authService.login(authRequestDto);

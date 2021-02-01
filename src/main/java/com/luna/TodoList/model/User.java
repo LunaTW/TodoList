@@ -12,13 +12,9 @@ import static java.lang.Boolean.FALSE;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Builder
-@Entity
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long userId;
 
     @NotNull
