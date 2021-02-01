@@ -24,6 +24,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
     }
 
+    @ExceptionHandler(IncorrectInformationException.class)
+    public ResponseEntity<ErrorResult> handle(IncorrectInformationException exception){
+        String message = exception.getMessage();
+        ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.getReasonPhrase(),message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
+    }
+
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ErrorResult> handle(UserAlreadyExistException exception){
+        String message = exception.getMessage();
+        ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.getReasonPhrase(),message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
+    }
+
     @ExceptionHandler(MemoAlreadyFoundException.class)
     public ResponseEntity<ErrorResult> handle(MemoAlreadyFoundException exception){
         String message = exception.getMessage();

@@ -14,68 +14,54 @@ import java.util.List;
 public class MemoController {
     private MemoService memoService;
 
-    // -- For Admin Feature --
-    // Todo: getMemoByID(check message belong to this user,will get userId as well)
-
     public MemoController(MemoService memoService) {
         this.memoService = memoService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Memo addMemo(@RequestBody @Valid MemoRequestDto memoRequestDto) {
-        return memoService.addMemo(memoRequestDto);
-    }
-
-    @PostMapping("/share")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Memo shareMemo(@RequestParam Long userId, @RequestBody Memo memo) {
-        return memoService.shareMemo(userId, memo);
-    }
-
-    @GetMapping("/{id}")
-    public Memo getMemoById(@PathVariable Long id){
-        return memoService.getMemoById(id);
-    }
-
-    @GetMapping
-    public List<Memo> getAllMemos(){
-        return memoService.getAllMemos();
-    }
-
-    @GetMapping("/tags/{tag}")
-    public List<Memo> getMemosByTag(@PathVariable String tag){
-        return memoService.getMemosByTag(tag);
-    }
-
-    @GetMapping("/keywords/{keyword}")
-    public List<Memo> getMemosByKeyword(@PathVariable String keyword){
-        return memoService.getMemosByKeyword(keyword);
-    }
-
-    @GetMapping("/complete")
-    public List<Memo> getMemosByCompleted(@RequestParam Boolean completed){
-        return memoService.getMemosByCompleted(completed);
-    }
-
-    @GetMapping("/users/{userId}")
-    public List<Memo> getMemoByUserId(@PathVariable Long userId){
-        return memoService.getMemoByUserId(userId);
+    public Memo addMemo(@RequestParam Long loginUserId, @RequestBody @Valid MemoRequestDto memoRequestDto) {
+        return memoService.addMemo(loginUserId, memoRequestDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMemosById(@PathVariable Long id){
-        memoService.deleteMemosById(id);
+    public String deleteMemosById(@PathVariable Long memoId, @RequestParam Long loginUserId){
+        return memoService.deleteMemosById(memoId, loginUserId);
     }
 
     @DeleteMapping("/users/{userId}")
-    public void deleteMemosByUserId(@PathVariable Long userId){
-        memoService.deleteMemosByUserId(userId);
+    public String deleteMemosByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
+        return memoService.deleteMemosByUserId(userId, loginUserId);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Memo updateMemo(@PathVariable Long id, @RequestBody @Valid MemoRequestDto memoRequestDto){
         return memoService.updateMemo(id,memoRequestDto);
+    }
+
+    @GetMapping("/{id}")
+    public Memo getMemoById(@PathVariable Long id, @RequestParam Long loginUserId){
+        return memoService.getMemoById(id, loginUserId);
+    }
+
+    @GetMapping("/users/{userId}")
+    public List<Memo> getMemoByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
+        return memoService.getMemoByUserId(userId, loginUserId);
+    }
+
+    @GetMapping("/tags/{tag}")
+    public List<Memo> getMemosByTag(@PathVariable String tag, @RequestParam Long loginUserId){
+        return memoService.getMemosByTag(tag, loginUserId);
+    }
+
+    @GetMapping("/keywords/{keyword}")
+    public List<Memo> getMemosByKeyword(@PathVariable String keyword, @RequestParam Long loginUserId){
+        return memoService.getMemosByKeyword(keyword, loginUserId);
+    }
+
+    @GetMapping("/complete")
+    public List<Memo> getMemosByCompleted(@RequestParam Boolean completed, @RequestParam Long loginUserId){
+        return memoService.getMemosByCompleted(completed, loginUserId);
     }
 }

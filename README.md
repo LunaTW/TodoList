@@ -68,5 +68,18 @@ User:
 | DoB | Date |
 | email | String | 
 | phone | String | 
+| Admin | Boolean |
+
+~~~
+admin 原则:
+1. 个人可对自己memo，user info 增删改查. 
+2. 个人无法查看他人的私人memo, 可查看他人的public memo和个人信息.
+3. admin可以get all info，delete all info, 但无法更改他人信息.
 
 
+问题：memo post：
+1- 检测userID，若userId不存在，则返回error
+2- password 更新。
+3- 睡否需要token,若需要，是否需要反解锁
+4- memo增删改查需要检测 userId or token
+5- 整体的规划 - 权限 - 

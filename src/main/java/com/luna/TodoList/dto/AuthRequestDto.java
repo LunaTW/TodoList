@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.Date;
 
 import static java.lang.Boolean.FALSE;
 
@@ -15,18 +14,16 @@ import static java.lang.Boolean.FALSE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequestDto {
+public class AuthRequestDto {
 
     @NotNull
-    private String username;
+    private String username; // uniq
 
+    @NotNull
     private String password;
-
-    private LocalDate DateOfBirth;
-
-    private String email;
-
-    private String phone;
 
     private Boolean admin=FALSE;
 }
+
+
+

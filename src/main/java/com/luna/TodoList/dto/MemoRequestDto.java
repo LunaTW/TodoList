@@ -2,7 +2,6 @@ package com.luna.TodoList.dto;
 
 import lombok.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import static java.lang.Boolean.FALSE;

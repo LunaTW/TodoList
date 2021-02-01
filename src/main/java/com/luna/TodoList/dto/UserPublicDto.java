@@ -6,27 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.Date;
-
-import static java.lang.Boolean.FALSE;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequestDto {
-
+public class UserPublicDto {
     @NotNull
     private String username;
-
-    private String password;
-
-    private LocalDate DateOfBirth;
-
-    private String email;
-
-    private String phone;
-
-    private Boolean admin=FALSE;
 }
+
+
