@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemoRepository extends JpaRepository<Memo, Long> {
     long deleteByUserId(Long userId);
+    long findUserIdById(Long Id);
 }
