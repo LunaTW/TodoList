@@ -2,13 +2,11 @@ package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.UserPublicDto;
 import com.luna.TodoList.dto.UserRequestDto;
-import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.User;
 import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {

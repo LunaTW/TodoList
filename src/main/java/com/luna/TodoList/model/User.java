@@ -2,10 +2,8 @@ package com.luna.TodoList.model;
 
 import lombok.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static java.lang.Boolean.FALSE;
 

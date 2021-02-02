@@ -42,6 +42,4 @@ public class AuthService {
             throw new IncorrectInformationException("Wrong Username/Password");
         }
     }
-
-
 }
