@@ -34,7 +34,6 @@ public class MemoService {
                 .publicity(memoRequestDto.getPublicity())
                 .localDate_created(LocalDate.now())
                 .localDate_modified(LocalDate.now())
-                .userId(memoRequestDto.getUserId())
                 .build();
         memoRepository.save(memo);
         return memo;
@@ -104,18 +103,6 @@ public class MemoService {
         }
     }
 
-    public List<Memo> getMemoByUserId(Long id, Long loginUserId) {
-        if (userRepository.findAdminByUserId(loginUserId) || id.equals(loginUserId)) {
-            List<Memo> allMemosByUserId = memoRepository.findAll()
-                    .stream()
-                    .filter(memo -> memo.getUserId().equals(id))
-                    .collect(Collectors.toList());
-            return allMemosByUserId;
-        } else {
-            throw new IncorrectInformationException("You Do Not Have Access");
-        }
-    }
-
     public String deleteMemosById(Long memoId, Long loginUserId) throws IncorrectInformationException {
         if (memoRepository.findUserIdById(memoId)==loginUserId || userRepository.findAdminByUserId(loginUserId)){
             memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
@@ -156,7 +143,6 @@ public class MemoService {
                 .publicity(memo.getPublicity())
                 .localDate_created(LocalDate.now())
                 .localDate_modified(LocalDate.now())
-                .userId(userId)
                 .build();
         memoRepository.save(newMemo);
         return newMemo;

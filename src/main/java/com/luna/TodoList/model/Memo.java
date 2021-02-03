@@ -1,10 +1,8 @@
 package com.luna.TodoList.model;
 
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -36,5 +34,7 @@ public class Memo {
     private LocalDate localDate_modified=LocalDate.now();
 
     @NotNull(message ="~UserId cannot be none~")
-    private Long userId;
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH},optional=false)//可选属性optional=false,表示author不能为空。删除文章，不影响用户
+    @JoinColumn(name="userId")
+    private User user;
 }

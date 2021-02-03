@@ -45,10 +45,10 @@ public class MemoController {
         return memoService.getMemoById(id, loginUserId);
     }
 
-    @GetMapping("/users/{userId}")
-    public List<Memo> getMemoByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
-        return memoService.getMemoByUserId(userId, loginUserId);
-    }
+//    @GetMapping("/users/{userId}")
+//    public List<Memo> getMemoByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
+//        return memoService.getMemoByUserId(userId, loginUserId);
+//    }
 
     @GetMapping("/tags/{tag}")
     public List<Memo> getMemosByTag(@PathVariable String tag, @RequestParam Long loginUserId){
