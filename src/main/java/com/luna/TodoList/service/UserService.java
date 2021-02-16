@@ -1,14 +1,13 @@
 package com.luna.TodoList.service;
 
-import com.luna.TodoList.dto.UserPublicDto;
 import com.luna.TodoList.dto.UserRequestDto;
+import com.luna.TodoList.exception.NoAccessException;
 import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.User;
 import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,24 +17,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String deleteUserById(Long id, UserRequestDto userRequestDto) throws Exception {
+    public void deleteUserById(Long id, Long loginId) throws NoAccessException {
 
-        Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
-
-        if (id.equals(userLogin) || userRequestDto.getAdmin()) {
+        if (id.equals(loginId) || userRepository.findAdminByUserId(loginId)) {
             userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not exist"));
             userRepository.deleteById(id);
-            return "SUCCESS";
         } else {
-            throw new Exception("You do not have access");
+            throw new NoAccessException("You do not have access");
         }
     }
 
-    public User updateUser(Long id, UserRequestDto userRequestDto) throws Exception {
+    public User updateUser(Long id, Long loginId, UserRequestDto userRequestDto) throws NotFoundException {
 
-        Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
+        long userToUpdateId = userRepository.findUserIdByUsername(userRequestDto.getUsername());
 
-        if (id.equals(userLogin) || userRequestDto.getAdmin()) {
+        if (userToUpdateId != id ){
+            throw new NoAccessException("You can only update your profile");
+        } else if (userRepository.findAdminByUserId(loginId) || loginId.equals(userToUpdateId)){
             userRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not exist!"));
             User userToUpdate = userRepository.getOne(id);
             userToUpdate.setUsername(userRequestDto.getUsername());
@@ -45,31 +43,27 @@ public class UserService {
             userRepository.save(userToUpdate);
             return userToUpdate;
         } else {
-            throw new Exception("You do not have access");
+            throw new NoAccessException("You do not have access");
         }
     }
 
-    public List<User> getAllUsers(Long loginId) throws Exception {
+    public List<User> getAllUsers(Long loginId) throws NoAccessException {
+
         if (userRepository.findAdminByUserId(loginId)) {
             return userRepository.findAll();
         } else {
-            throw new Exception("You do not have access");
-
+            throw new NoAccessException("You do not have access");
         }
     }
 
-    public User getUserById(Long id, UserRequestDto userRequestDto) throws Exception {
+    public User getUserById(Long id, Long loginId) throws NotFoundException {
 
-        Long userLogin = userRepository.findByUsername(userRequestDto.getUsername()).getUserId();
+        User userInfo = userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
 
-        if (id.equals(userLogin) || userRequestDto.getAdmin()) {
-            return userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
+        if (id.equals(loginId) || userRepository.findAdminByUserId(loginId)) {
+            return userInfo;
         } else {
-            throw new Exception("You do not have access");
+            return User.builder().username(userInfo.getUsername()).build();
         }
-    }
-
-    public UserPublicDto getOtherUserById(Long id, Long usersInfoId) throws Exception {
-        return UserPublicDto.builder().username(userRepository.findUsernameById(usersInfoId)).build();
     }
 }

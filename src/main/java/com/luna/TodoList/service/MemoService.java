@@ -2,12 +2,14 @@ package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.MemoRequestDto;
 import com.luna.TodoList.exception.IncorrectInformationException;
+import com.luna.TodoList.exception.NoAccessException;
 import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.Memo;
 import com.luna.TodoList.repository.MemoRepository;
 import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,9 +42,11 @@ public class MemoService {
         return memo;
     }
 
-    public Memo getMemoById(Long id, Long loginUserId) throws NotFoundException {
-        if (id.equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
-            return memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
+    public Memo getMemoById(Long memoId, Long loginUserId) throws NotFoundException {
+        Memo memoToCheck = memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
+
+        if (memoToCheck.getUserId().equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
+            return memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
         } else {
             throw new IncorrectInformationException("You Do Not Have Access");
         }
@@ -50,49 +54,43 @@ public class MemoService {
 
     public List<Memo> getMemosByTag(String tag, Long loginUserId){
         if (userRepository.findAdminByUserId(loginUserId)){
-            List<Memo> allMemosByTag = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
                     .filter(memo -> memo.getTag().equals(tag))
                     .collect(Collectors.toList());
-            return allMemosByTag;
         } else {
-            List<Memo> allMemosByTag = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
-                    .filter(memo -> memo.getTag().equals(tag) && memo.getPublicity().equals(TRUE))
+                    .filter(memo -> memo.getTag().equals(tag) && (memo.getPublicity().equals(TRUE) || memo.getUserId().equals(loginUserId)))
                     .collect(Collectors.toList());
-            return allMemosByTag;
         }
     }
 
     public List<Memo> getMemosByCompleted(Boolean completed, Long loginUserId){
         if (userRepository.findAdminByUserId(loginUserId)){
-            List<Memo> allMemosByCompleted = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
                     .filter(memo -> memo.getComplete().equals(completed))
                     .collect(Collectors.toList());
-            return allMemosByCompleted;
         } else {
-            List<Memo> allMemosByCompleted = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
-                    .filter(memo -> memo.getComplete().equals(completed) && memo.getPublicity().equals(TRUE))
+                    .filter(memo -> memo.getComplete().equals(completed) && (memo.getPublicity().equals(TRUE) || memo.getUserId().equals(loginUserId)))
                     .collect(Collectors.toList());
-            return allMemosByCompleted;
         }
     }
 
     public List<Memo> getMemosByKeyword(String keyword, Long loginUserId){
         if (userRepository.findAdminByUserId(loginUserId)){
-            List<Memo> allMemosByKeyword = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
                     .filter(memo -> memo.getMessage().contains(keyword))
                     .collect(Collectors.toList());
-            return allMemosByKeyword;
         } else {
-            List<Memo> allMemosByKeyword = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
-                    .filter(memo -> memo.getMessage().contains(keyword) && memo.getPublicity().equals(TRUE))
+                    .filter(memo -> memo.getMessage().contains(keyword) && (memo.getPublicity().equals(TRUE) || memo.getUserId().equals(loginUserId)))
                     .collect(Collectors.toList());
-            return allMemosByKeyword;
         }
     }
 
@@ -100,17 +98,16 @@ public class MemoService {
         if (userRepository.findAdminByUserId(loginId)){
             return memoRepository.findAll();
         }else {
-            throw new IncorrectInformationException("You Do Not Have Access");
+            return memoRepository.findAll().stream().filter(memo -> memo.getPublicity().equals(true) || memo.getUserId().equals(loginId)).collect(Collectors.toList());
         }
     }
 
     public List<Memo> getMemoByUserId(Long id, Long loginUserId) {
         if (userRepository.findAdminByUserId(loginUserId) || id.equals(loginUserId)) {
-            List<Memo> allMemosByUserId = memoRepository.findAll()
+            return memoRepository.findAll()
                     .stream()
                     .filter(memo -> memo.getUserId().equals(id))
                     .collect(Collectors.toList());
-            return allMemosByUserId;
         } else {
             throw new IncorrectInformationException("You Do Not Have Access");
         }
@@ -126,27 +123,34 @@ public class MemoService {
         }
     }
 
-    public String deleteMemosByUserId(Long userId, Long loginUserId) throws NotFoundException {
+    @Transactional
+    public Long deleteMemosByUserId(Long userId, Long loginUserId) throws NotFoundException {
         if (userId.equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
             userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not exist"));
-            memoRepository.deleteByUserId(userId);
-            return "SUCCESS";
+            System.out.println("+++++++++++++++++");
+            System.out.println(userId);
+            System.out.println(memoRepository.findByUserId(userId));
+            System.out.println("+++++++++++++++++");
+            return memoRepository.deleteByUserId(userId);
         } else {
             throw new IncorrectInformationException("You Do Not Have Access");
         }
     }
 
-    // cannot change user for now: for design
-    public Memo updateMemo(Long id, MemoRequestDto memoRequestDto) throws NotFoundException {
-        memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
-        Memo memoToUpdate = memoRepository.getOne(id);
-        memoToUpdate.setMessage(memoRequestDto.getMessage());
-        memoToUpdate.setTag(memoRequestDto.getTag());
-        memoToUpdate.setComplete(memoRequestDto.getComplete());
-        memoToUpdate.setLocalDate_modified(LocalDate.now());
-        memoToUpdate.setPublicity(memoRequestDto.getPublicity());
-        memoRepository.save(memoToUpdate);
-        return memoToUpdate;
+    public Memo updateMemo(Long id, Long loginUserId, MemoRequestDto memoRequestDto) throws NotFoundException {
+        if (memoRepository.findUserIdById(id)==loginUserId){
+            memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
+            Memo memoToUpdate = memoRepository.getOne(id);
+            memoToUpdate.setMessage(memoRequestDto.getMessage());
+            memoToUpdate.setTag(memoRequestDto.getTag());
+            memoToUpdate.setComplete(memoRequestDto.getComplete());
+            memoToUpdate.setLocalDate_modified(LocalDate.now());
+            memoToUpdate.setPublicity(memoRequestDto.getPublicity());
+            memoRepository.save(memoToUpdate);
+            return memoToUpdate;
+        }else{
+            throw new NoAccessException("You do not have access");
+        }
     }
 
     public Memo shareMemo(Long userId, Memo memo) {

@@ -2,6 +2,7 @@ package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.AuthRequestDto;
 import com.luna.TodoList.exception.IncorrectInformationException;
+import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.exception.UserAlreadyExistException;
 import com.luna.TodoList.model.User;
 import com.luna.TodoList.repository.UserRepository;
@@ -18,7 +19,7 @@ public class AuthService {
 
     public String register(AuthRequestDto authRequestDto) throws UserAlreadyExistException {
         String username = authRequestDto.getUsername();
-        if (userRepository.findByUsername(username) == null) {
+        if (userRepository.findByUsername(username) != null) {
             throw new UserAlreadyExistException("User Already Exist! Please Try Another One");
         }else{
             User user = User.builder()
@@ -32,8 +33,13 @@ public class AuthService {
     }
 
     public User login(AuthRequestDto authRequestDto) throws IncorrectInformationException {
+
         String username = authRequestDto.getUsername();
         String password = authRequestDto.getPassword();
+        if (userRepository.findByUsername(username) == null){
+            throw new IncorrectInformationException("User not exist");
+        }
+
         String passwordToCompare = userRepository.findByUsername(username).getPassword();
 
         if (passwordToCompare.equals(password)){
@@ -42,6 +48,4 @@ public class AuthService {
             throw new IncorrectInformationException("Wrong Username/Password");
         }
     }
-
-
 }

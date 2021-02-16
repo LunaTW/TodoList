@@ -22,14 +22,4 @@ public class AdminController {
         this.userService = userService;
         this.memoService = memoService;
     }
-
-    @GetMapping(value = "/users")
-    public List<User> getAllUsers(@RequestParam Long loginId) throws Exception {
-        return userService.getAllUsers(loginId);
-    }
-
-    @GetMapping(value = "/memos")
-    public List<Memo> getAllMemos(@RequestParam Long loginId) throws Exception {
-        return memoService.getAllMemos(loginId);
-    }
 }

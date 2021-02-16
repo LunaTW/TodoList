@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/memos")
 public class MemoController {
-    private MemoService memoService;
+    private final MemoService memoService;
 
     public MemoController(MemoService memoService) {
         this.memoService = memoService;
@@ -24,25 +24,25 @@ public class MemoController {
         return memoService.addMemo(loginUserId, memoRequestDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{memoId}")
     public String deleteMemosById(@PathVariable Long memoId, @RequestParam Long loginUserId){
         return memoService.deleteMemosById(memoId, loginUserId);
     }
 
     @DeleteMapping("/users/{userId}")
-    public String deleteMemosByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
+    public Long deleteMemosByUserId(@PathVariable Long userId, @RequestParam Long loginUserId){
         return memoService.deleteMemosByUserId(userId, loginUserId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{memoId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Memo updateMemo(@PathVariable Long id, @RequestBody @Valid MemoRequestDto memoRequestDto){
-        return memoService.updateMemo(id,memoRequestDto);
+    public Memo updateMemo(@PathVariable Long memoId, @RequestParam Long loginUserId, @RequestBody @Valid MemoRequestDto memoRequestDto){
+        return memoService.updateMemo(memoId, loginUserId, memoRequestDto);
     }
 
-    @GetMapping("/{id}")
-    public Memo getMemoById(@PathVariable Long id, @RequestParam Long loginUserId){
-        return memoService.getMemoById(id, loginUserId);
+    @GetMapping("/{memoId}")
+    public Memo getMemoById(@PathVariable Long memoId, @RequestParam Long loginUserId){
+        return memoService.getMemoById(memoId, loginUserId);
     }
 
     @GetMapping("/users/{userId}")
@@ -63,5 +63,10 @@ public class MemoController {
     @GetMapping("/complete")
     public List<Memo> getMemosByCompleted(@RequestParam Boolean completed, @RequestParam Long loginUserId){
         return memoService.getMemosByCompleted(completed, loginUserId);
+    }
+
+    @GetMapping
+    public List<Memo> getAllMemos(@RequestParam Long loginId) {
+        return memoService.getAllMemos(loginId);
     }
 }

@@ -1,0 +1,8 @@
+
+| Qestion1: |error message| reason | useful-link | 
+|---|---|---|---|
+| deleteby error | javax.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'remove' call | 当前线程没有实体管理器和可用的实际事务——不能可靠地处理“remove”调用 --> 在做增删改操作的时候要在service层的方法上添加事务: @Transactional | https://blog.csdn.net/W_litttle/article/details/84720025?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.baidujs&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.baidujs | 
+| findby | findAdminByuserId | 需要自己写query语句 | 略 | 
+
+ 
+
