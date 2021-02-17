@@ -20,7 +20,7 @@ public class UserService {
     public void deleteUserById(Long id, Long loginId) throws NoAccessException {
 
         if (id.equals(loginId) || userRepository.findAdminByUserId(loginId)) {
-            userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not exist"));
+            userRepository.findById(id);
             userRepository.deleteById(id);
         } else {
             throw new NoAccessException("You do not have access");
@@ -34,8 +34,8 @@ public class UserService {
         if (userToUpdateId != id ){
             throw new NoAccessException("You can only update your profile");
         } else if (userRepository.findAdminByUserId(loginId) || loginId.equals(userToUpdateId)){
-            userRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not exist!"));
-            User userToUpdate = userRepository.getOne(id);
+            userRepository.findById(id);
+            User userToUpdate = userRepository.findById(id);
             userToUpdate.setUsername(userRequestDto.getUsername());
             userToUpdate.setDateOfBirth(userRequestDto.getDateOfBirth());
             userToUpdate.setEmail(userRequestDto.getEmail());
@@ -58,7 +58,7 @@ public class UserService {
 
     public User getUserById(Long id, Long loginId) throws NotFoundException {
 
-        User userInfo = userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
+        User userInfo = userRepository.findById(id);
 
         if (id.equals(loginId) || userRepository.findAdminByUserId(loginId)) {
             return userInfo;

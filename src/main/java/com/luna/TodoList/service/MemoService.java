@@ -126,7 +126,7 @@ public class MemoService {
     @Transactional
     public Long deleteMemosByUserId(Long userId, Long loginUserId) throws NotFoundException {
         if (userId.equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
-            userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not exist"));
+            userRepository.findById(userId);
             System.out.println("+++++++++++++++++");
             System.out.println(userId);
             System.out.println(memoRepository.findByUserId(userId));
