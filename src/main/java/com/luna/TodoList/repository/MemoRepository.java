@@ -1,19 +1,48 @@
 package com.luna.TodoList.repository;
 
+import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.model.Memo;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
-public interface MemoRepository extends JpaRepository<Memo, Long> {
+public class MemoRepository {
+    public final List<Memo> memos = new ArrayList<>();
 
-    Long deleteByUserId(Long userId);
-    List<Memo> findByUserId(Long userId);
+    public void save(Memo memo){
+        long memoTotal = memos.size();
+        memo.setId(memoTotal+1);
+        memos.add(memo);
+    }
 
-    @Query("select m.userId from Memo m where m.id = :id")
-    long findUserIdById(Long id);
+    public Long deleteByUserId(Long userId){
+        List<Memo> memoToDelete = memos.stream().filter(memo -> memo.getUserId().equals(userId)).collect(Collectors.toList());
+        long totalNumber = 0L;
+        for (Memo x:memoToDelete){
+            memos.remove(x);
+            totalNumber += 1;
+        }
+        return totalNumber;
+    }
+
+    public void deleteById(Long memoId){
+        Memo memoToRemove = memos.stream().filter(memo -> memo.getId().equals(memoId)).findFirst().orElseThrow(() -> new NotFoundException("Memo not exist"));
+        memos.remove(memoToRemove);
+    }
+
+    public Long findUserIdById(Long id){
+        return memos.stream().filter(memo -> memo.getId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("Memo not exist")).getUserId();
+    }
+
+    public Memo findById(Long id){
+        return memos.stream().filter(memo -> memo.getId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("Memo not exist"));
+    }
+
+    public List<Memo> findAll() {
+        return memos;
+    }
+
 }

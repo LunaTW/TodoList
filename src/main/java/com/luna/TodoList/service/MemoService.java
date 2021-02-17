@@ -43,10 +43,10 @@ public class MemoService {
     }
 
     public Memo getMemoById(Long memoId, Long loginUserId) throws NotFoundException {
-        Memo memoToCheck = memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
+        Memo memoToCheck = memoRepository.findById(memoId);
 
         if (memoToCheck.getUserId().equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
-            return memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
+            return memoRepository.findById(memoId);
         } else {
             throw new IncorrectInformationException("You Do Not Have Access");
         }
@@ -114,8 +114,8 @@ public class MemoService {
     }
 
     public String deleteMemosById(Long memoId, Long loginUserId) throws IncorrectInformationException {
-        if (memoRepository.findUserIdById(memoId)==loginUserId || userRepository.findAdminByUserId(loginUserId)){
-            memoRepository.findById(memoId).orElseThrow(() -> new NotFoundException("Memo not exist"));
+        if (memoRepository.findUserIdById(memoId).equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
+            memoRepository.findById(memoId);
             memoRepository.deleteById(memoId);
             return "SUCCESS";
         } else {
@@ -127,10 +127,6 @@ public class MemoService {
     public Long deleteMemosByUserId(Long userId, Long loginUserId) throws NotFoundException {
         if (userId.equals(loginUserId) || userRepository.findAdminByUserId(loginUserId)){
             userRepository.findById(userId);
-            System.out.println("+++++++++++++++++");
-            System.out.println(userId);
-            System.out.println(memoRepository.findByUserId(userId));
-            System.out.println("+++++++++++++++++");
             return memoRepository.deleteByUserId(userId);
         } else {
             throw new IncorrectInformationException("You Do Not Have Access");
@@ -138,9 +134,9 @@ public class MemoService {
     }
 
     public Memo updateMemo(Long id, Long loginUserId, MemoRequestDto memoRequestDto) throws NotFoundException {
-        if (memoRepository.findUserIdById(id)==loginUserId){
-            memoRepository.findById(id).orElseThrow(() -> new NotFoundException("Memo not exist"));
-            Memo memoToUpdate = memoRepository.getOne(id);
+        if (memoRepository.findUserIdById(id).equals(loginUserId)){
+            memoRepository.findById(id);
+            Memo memoToUpdate = memoRepository.findById(id);
             memoToUpdate.setMessage(memoRequestDto.getMessage());
             memoToUpdate.setTag(memoRequestDto.getTag());
             memoToUpdate.setComplete(memoRequestDto.getComplete());

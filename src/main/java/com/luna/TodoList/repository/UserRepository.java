@@ -16,7 +16,7 @@ public class UserRepository {
     public final List<User> users = new ArrayList<>();
 
     public void save(User user) {
-        Long userTotal = users.stream().count();
+        long userTotal = (long) users.size();
         user.setUserId(userTotal+1);
         users.add(user);
     }
