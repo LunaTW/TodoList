@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 import static java.lang.Boolean.FALSE;
@@ -25,6 +26,7 @@ public class Memo {
     @NotNull(message = "~ Plan title cannot be none ~")
     private String message;
 
+    @Size(max = 20)
     private String tag="Others";
 
     private Boolean complete=FALSE;
