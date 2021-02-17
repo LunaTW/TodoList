@@ -21,6 +21,4 @@ public class MemoRequestDto {
 
     private Boolean publicity=FALSE;
 
-    @NotNull(message ="~UserId cannot be none~")
-    private Long userId;
 }

@@ -1,8 +1,7 @@
 package com.luna.TodoList.controller;
 
 import com.luna.TodoList.dto.AuthRequestDto;
-import com.luna.TodoList.dto.UserRequestDto;
-import com.luna.TodoList.model.User;
+import com.luna.TodoList.model.Users;
 import com.luna.TodoList.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class AuthController {
 
 
     @GetMapping(value = "/login")
-    public User login(@RequestBody @Valid AuthRequestDto authRequestDto)  {
+    public Users login(@RequestBody @Valid AuthRequestDto authRequestDto)  {
         return authService.login(authRequestDto);
     }
 }

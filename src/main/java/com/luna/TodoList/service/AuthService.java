@@ -2,9 +2,8 @@ package com.luna.TodoList.service;
 
 import com.luna.TodoList.dto.AuthRequestDto;
 import com.luna.TodoList.exception.IncorrectInformationException;
-import com.luna.TodoList.exception.NotFoundException;
 import com.luna.TodoList.exception.UserAlreadyExistException;
-import com.luna.TodoList.model.User;
+import com.luna.TodoList.model.Users;
 import com.luna.TodoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +21,17 @@ public class AuthService {
         if (userRepository.findByUsername(username) != null) {
             throw new UserAlreadyExistException("User Already Exist! Please Try Another One");
         }else{
-            User user = User.builder()
+            Users users = Users.builder()
                     .username(authRequestDto.getUsername())
                     .password(authRequestDto.getPassword())
                     .admin(authRequestDto.getAdmin())
                     .build();
-            userRepository.save(user);
+            userRepository.save(users);
             return "SUCCESS";
         }
     }
 
-    public User login(AuthRequestDto authRequestDto) throws IncorrectInformationException {
+    public Users login(AuthRequestDto authRequestDto) throws IncorrectInformationException {
 
         String username = authRequestDto.getUsername();
         String password = authRequestDto.getPassword();

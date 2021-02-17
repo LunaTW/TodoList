@@ -14,6 +14,6 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
     Long deleteByUserId(Long userId);
     List<Memo> findByUserId(Long userId);
 
-    @Query("select m.userId from Memo m where m.id = :id")
-    long findUserIdById(Long id);
+//    @Query("select m.userId from Memo m where m.id = :id")
+//    long findUserIdById(Long id);
 }

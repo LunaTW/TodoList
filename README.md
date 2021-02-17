@@ -15,7 +15,7 @@ Try ?
  |   😄  | POST  | DELETE | PUT | GET |
  |  ----  | ----  | --- | --- | --- |
  |   Memo  | 1. memo(userID) | 1. memo(memoID) <br>  2. memo(userId) | 1. memo(memoID)  | 1. All memos <br> 2. All memos (public)[暂时未用] <br> 3. All memos (userID) <br> 4. memo (memoID) <br> 5. memo (tags) <br> 6. memo (keyword) <br> 7. memo (complete) <br>    |
- |   User  | 1. user  | 1. user(userID) | 1. user(userID) | 1. All users <br> 2. user (userID)| 
+ |   User  | 1. users  | 1. users(userID) | 1. users(userID) | 1. All users <br> 2. users (userID)| 
 
   ###Postman:
 - POST:
@@ -72,7 +72,7 @@ User:
 
 ~~~
 admin 原则:
-1. 个人可对自己memo，user info 增删改查. 
+1. 个人可对自己memo，users info 增删改查. 
 2. 个人无法查看他人的私人memo, 可查看他人的public memo和个人信息.
 3. admin可以get all info，delete all info, 但无法更改他人信息.
 

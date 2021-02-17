@@ -12,7 +12,7 @@
 |---|---|---|---|
 |时区问题(猜测）|application.yml文件中的datasource配置节中的url配置加上`&serverTimezone=UTC`，<br> 即: `spring.datasource.url=jdbc:mysql://database/mysql?serverTimezone=UTC&useSSL=true` |[SpringBoot配置JDBC连接MySql数据库的时候遇到了报错：HikariPool-1 - Exception during pool initialization](https://www.cnblogs.com/stilldream/p/11284187.html) |否|
 |mysql 版本问题(猜测)|更换mysql版本。image: mysql:8.0.22 or mysql:5.7 |❌| 未解决 |
-|Error creating root user(猜测)|并没真正问题| [Error creating root user](https://github.com/docker-library/mysql/issues/307)|未解决|
+|Error creating root users(猜测)|并没真正问题| [Error creating root users](https://github.com/docker-library/mysql/issues/307)|未解决|
 |docker-compose 设置(猜测)|在docker-compose.yaml文件中添加 `- MYSQL_HOST=localhost`|https://github.com/docker-library/mysql/issues/216|疑似解决==> 并没有，在其他文件中尝试，发现不更改，也可以实现|
 |mysql启动耗时🙆(正确)|为mysql添加health check（直到mysql启动好，再启动app)|  - [Docker 容器的健康检查](https://beginor.github.io/2018/03/11/healthy-check-instruction-of-docker.html) <br> - [Docker-compose check if mysql connection is ready](https://stackoverflow.com/questions/42567475/docker-compose-check-if-mysql-connection-is-ready)|解决👏👏👏｜
 

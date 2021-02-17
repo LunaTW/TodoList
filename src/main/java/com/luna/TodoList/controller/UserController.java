@@ -1,7 +1,7 @@
 package com.luna.TodoList.controller;
 
 import com.luna.TodoList.dto.UserRequestDto;
-import com.luna.TodoList.model.User;
+import com.luna.TodoList.model.Users;
 import com.luna.TodoList.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +26,17 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public User updateUser(@PathVariable Long id, @RequestParam Long loginId, @RequestBody @Valid UserRequestDto userRequestDto) throws Exception {
+    public Users updateUser(@PathVariable Long id, @RequestParam Long loginId, @RequestBody @Valid UserRequestDto userRequestDto) throws Exception {
         return userService.updateUser(id, loginId, userRequestDto);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id, @RequestParam Long loginId)  {
+    public Users getUserById(@PathVariable Long id, @RequestParam Long loginId)  {
         return userService.getUserById(id, loginId);
     }
 
     @GetMapping
-    public List<User> getAllUsers(@RequestParam Long loginId) {
+    public List<Users> getAllUsers(@RequestParam Long loginId) {
         return userService.getAllUsers(loginId);
     }
 }
