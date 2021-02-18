@@ -31,10 +31,10 @@ public class UserService {
 
         long userToUpdateId = userRepository.findUserIdByUsername(userRequestDto.getUsername());
 
-        if (userToUpdateId != id ){
+        if (userToUpdateId != id) {
             throw new NoAccessException("You can only update your profile");
-        } else if (userRepository.findAdminByUserId(loginId) || loginId.equals(userToUpdateId)){
-            userRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not exist!"));
+        } else if (userRepository.findAdminByUserId(loginId) || loginId.equals(userToUpdateId)) {
+            userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not exist!"));
             User userToUpdate = userRepository.getOne(id);
             userToUpdate.setUsername(userRequestDto.getUsername());
             userToUpdate.setDateOfBirth(userRequestDto.getDateOfBirth());
@@ -58,7 +58,7 @@ public class UserService {
 
     public User getUserById(Long id, Long loginId) throws NotFoundException {
 
-        User userInfo = userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not exit"));
+        User userInfo = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not exit"));
 
         if (id.equals(loginId) || userRepository.findAdminByUserId(loginId)) {
             return userInfo;

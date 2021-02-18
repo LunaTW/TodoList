@@ -6,5 +6,3 @@ public class NoAccessException extends RuntimeException {
     }
 
 }
-
-

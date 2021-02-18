@@ -1,6 +1,7 @@
 package com.luna.TodoList.model;
 
 import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,16 +28,16 @@ public class Memo {
     private String message;
 
     @Size(max = 20)
-    private String tag="Others";
+    private String tag = "Others";
 
-    private Boolean complete=FALSE;
+    private Boolean complete = FALSE;
 
-    private Boolean publicity=FALSE;
+    private Boolean publicity = FALSE;
 
-    private LocalDate localDate_created=LocalDate.now();
+    private LocalDate localDate_created = LocalDate.now();
 
-    private LocalDate localDate_modified=LocalDate.now();
+    private LocalDate localDate_modified = LocalDate.now();
 
-    @NotNull(message ="~UserId cannot be none~")
+    @NotNull(message = "~UserId cannot be none~")
     private Long userId;
 }

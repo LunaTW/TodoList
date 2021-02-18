@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static java.lang.Boolean.FALSE;
 
@@ -28,5 +27,5 @@ public class UserRequestDto {
 
     private String phone;
 
-    private Boolean admin=FALSE;
+    private Boolean admin = FALSE;
 }

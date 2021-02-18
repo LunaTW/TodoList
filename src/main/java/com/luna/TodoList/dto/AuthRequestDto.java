@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +21,7 @@ public class AuthRequestDto {
     @NotNull
     private String password;
 
-    private Boolean admin=FALSE;
+    private Boolean admin = FALSE;
 }
 
 

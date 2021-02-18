@@ -15,12 +15,12 @@ public class MemoRequestDto {
     @NotNull(message = "~ Plan title cannot be none ~")
     private String message;
 
-    private String tag="Others";
+    private String tag = "Others";
 
-    private Boolean complete=FALSE;
+    private Boolean complete = FALSE;
 
-    private Boolean publicity=FALSE;
+    private Boolean publicity = FALSE;
 
-    @NotNull(message ="~UserId cannot be none~")
+    @NotNull(message = "~UserId cannot be none~")
     private Long userId;
 }
