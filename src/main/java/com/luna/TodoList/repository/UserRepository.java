@@ -14,10 +14,11 @@ import static java.lang.Boolean.TRUE;
 public class UserRepository {
 
     public final List<User> users = new ArrayList<>();
+    public static Long userTotal = 0L;
 
     public void save(User user) {
-        long userTotal = (long) users.size();
-        user.setUserId(userTotal+1);
+        userTotal += 1;
+        user.setUserId(userTotal);
         users.add(user);
     }
 
@@ -26,7 +27,7 @@ public class UserRepository {
     }
 
     public User findById(Long id) throws NotFoundException {
-        return users.stream().filter(user -> user.getUserId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("User not exist") );
+        return users.stream().filter(user -> user.getUserId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("User not exist"));
     }
 
     public List<User> findAll() {
@@ -34,7 +35,7 @@ public class UserRepository {
     }
 
     public void deleteById(Long id) throws NotFoundException {
-        User userToDelete = users.stream().filter(user -> user.getUserId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("User not exist") );
+        User userToDelete = users.stream().filter(user -> user.getUserId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("User not exist"));
         users.remove(userToDelete);
     }
 
